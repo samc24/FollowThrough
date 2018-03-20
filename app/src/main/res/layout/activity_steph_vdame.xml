@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.samch.followthrough.StephVDame">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/google_pixe"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#000000">
+
+        <VideoView
+            android:id="@+id/videoView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="340.5dp"
+            android:layout_marginStart="340.5dp" />
+
+        <VideoView
+            android:id="@+id/videoView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="340.5dp"
+            android:layout_marginRight="340.5dp" />
+
+        <ImageButton
+            android:id="@+id/dame"
+            android:layout_width="103dp"
+            android:layout_height="97dp"
+            android:layout_alignEnd="@+id/videoView2"
+            android:layout_alignRight="@+id/videoView2"
+            android:layout_alignTop="@+id/steph"
+            android:layout_marginEnd="110dp"
+            android:layout_marginRight="110dp"
+            android:background="@android:color/transparent"
+            android:src="@android:drawable/ic_media_play"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="97dp"
+            tools:layout_editor_absoluteY="95dp" />
+
+        <ImageButton
+            android:id="@+id/steph"
+            android:layout_width="103dp"
+            android:layout_height="97dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="110dp"
+            android:layout_marginRight="110dp"
+            android:background="@android:color/transparent"
+            android:src="@android:drawable/ic_media_play"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="97dp"
+            tools:layout_editor_absoluteY="95dp" />
+
+        <Button
+            android:id="@+id/damefs"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="115dp"
+            android:layout_marginRight="115dp"
+            android:layout_toLeftOf="@+id/steph"
+            android:layout_toStartOf="@+id/steph"
+            android:text="[  ]"
+            android:textColor="#FFFFFF"/>
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

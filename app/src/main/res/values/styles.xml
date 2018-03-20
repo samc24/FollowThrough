@@ -1,0 +1,25 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.AB" parent="Theme.AppCompat" tools:targetApi="lollipop">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+    </style>
+    <style name="MyActionBar" parent="@android:style/Widget.Material.ActionBar" tools:targetApi="lollipop" >
+        <item name="android:background">#FF27AE60</item>
+    </style>
+
+    <style
+        name="follow_thro">
+    <item
+        name="android:textSize">34sp
+    </item>
+    </style>
+
+</resources>
