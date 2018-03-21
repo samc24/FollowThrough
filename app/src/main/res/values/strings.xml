@@ -4,6 +4,8 @@
 
 Follow Through
 </string>
+    <string name="fullscreen">Fullscreen</string>
+    <string name="play">Play</string>
     <string-array name="pros">
         <item>Steph Curry</item>
         <item>Kobe Bryant</item>

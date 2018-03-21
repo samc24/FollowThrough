@@ -47,6 +47,16 @@ public class StephVDame extends AppCompatActivity {
 
             }
         });
+        final ImageButton stephfs = findViewById(R.id.stephfs);
+        stephfs.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // make fullscreen
+                //mVideoView1.setLayoutParams(new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT));
+            }
+        });
+
         final ImageButton dame = findViewById(R.id.dame);
         final VideoView mVideoView2 =  findViewById(R.id.videoView2);
         String uriPath2 = "android.resource://com.example.samch.followthrough/" + R.raw.dameform;
@@ -74,6 +84,13 @@ public class StephVDame extends AppCompatActivity {
         mVideoView2.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             public void onCompletion(MediaPlayer mp) {
                 dame.setVisibility(View.VISIBLE);
+            }
+        });
+        final ImageButton damefs = findViewById(R.id.damefs);
+        damefs.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }
