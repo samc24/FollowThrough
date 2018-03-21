@@ -9,6 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
 public class StephVDame extends AppCompatActivity {
@@ -53,7 +54,7 @@ public class StephVDame extends AppCompatActivity {
             public void onClick(View view) {
 
                 // make fullscreen
-                //mVideoView1.setLayoutParams(new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT));
+                mVideoView1.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT));
             }
         });
 
@@ -91,6 +92,8 @@ public class StephVDame extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                mVideoView2.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT));
+                System.out.println("Dame full screen");
             }
         });
     }
