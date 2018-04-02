@@ -23,6 +23,7 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         setTheme(R.style.AppTheme_AB);
+        // sort pros array (mergesort?)
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF27AE60")));
         ArrayAdapter adapter = (new ArrayAdapter<String>(this, R.layout.list_item,
                 getResources().getStringArray(R.array.pros)));
@@ -32,11 +33,12 @@ public class HomePage extends AppCompatActivity {
         lv.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(),
-                        ((TextView)view).getText(), Toast.LENGTH_SHORT).show();
-                Intent compare = new Intent(HomePage.this, StephVDame.class);
+                Toast.makeText(getApplicationContext(),((TextView)view).getText(), Toast.LENGTH_SHORT).show();
+                Intent compare = new Intent(HomePage.this, UserVPro.class);
+                compare.putExtra("Pro", (((TextView) view).getText()));
                 startActivity(compare);
             }
         } );
+
     }
 }
