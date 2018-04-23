@@ -19,8 +19,8 @@ public class Startup extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startup);
-//        MyObjectBox.builder().androidContext(Startup.this).build();
-//        initializePlayerBox();
+
+        initializePlayerBox();
         Button login = findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
                                         @Override
@@ -34,7 +34,7 @@ public class Startup extends AppCompatActivity {
     }
 
     private void initializePlayerBox(){
-        playersBox = (MyObjectBox.builder().androidContext(Startup.this).build()).boxFor(Player.class);
+        playersBox = ((App)getApplication()).getBoxStore().boxFor(Player.class);
         Player player1 = new Player("Stephen Curry","android.resource://com.example.samch.followthrough/" + R.raw.stephform);
         Player player2 = new Player("Damian Lillard","android.resource://com.example.samch.followthrough/" + R.raw.dameform);
         playersBox.put(player1,player2);

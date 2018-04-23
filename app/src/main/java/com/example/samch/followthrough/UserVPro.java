@@ -27,10 +27,10 @@ public class UserVPro extends AppCompatActivity {
         setContentView(R.layout.activity_user_vpro);
         final ImageButton pro = findViewById(R.id.pro);
         final VideoView mVideoView1 =  findViewById(R.id.videoView1);
-//        long playerId = getIntent().getExtras().getLong("Pro");
-//        Box<Player> playersBox = (MyObjectBox.builder().androidContext(UserVPro.this).build()).boxFor(Player.class);
-//        final Player player = playersBox.get(playerId);
-        String uriPath1 = "android.resource://com.example.samch.followthrough/";
+        long playerId = getIntent().getExtras().getLong("ProId");
+        Box<Player> playersBox = ((App)getApplication()).getBoxStore().boxFor(Player.class);
+        final Player player = playersBox.get(playerId);
+        /*String uriPath1 = "android.resource://com.example.samch.followthrough/";
         String form = getIntent().getExtras().getString("Pro");
         switch(form){
             case "Stephen Curry":
@@ -41,9 +41,9 @@ public class UserVPro extends AppCompatActivity {
                 break;
              default:
                  uriPath1 += R.raw.dameform;
-        }
-//        final Uri uri1 = Uri.parse(player.getLocalFileURI());
-        final Uri uri1 = Uri.parse(uriPath1);
+        }*/
+        final Uri uri1 = Uri.parse(player.getLocalFileURI());
+//        final Uri uri1 = Uri.parse(uriPath1);
         pro.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
