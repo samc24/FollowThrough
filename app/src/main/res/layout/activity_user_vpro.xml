@@ -35,7 +35,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="340.5dp"
-        android:layout_marginRight="340.5dp" />
+        android:layout_marginRight="340.5dp"
+        android:visibility="gone"/>
 
     <ImageButton
         android:id="@+id/user"
@@ -52,7 +53,8 @@
         android:tint="#FF27AE60"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="97dp"
-        tools:layout_editor_absoluteY="95dp" />
+        tools:layout_editor_absoluteY="95dp"
+        android:visibility="gone"/>
 
     <ImageButton
         android:id="@+id/pro"
@@ -99,13 +101,16 @@
         android:background="@android:color/transparent"
         android:contentDescription="@string/fullscreen"
         android:tint="#FF27AE60"
-        app:srcCompat="@drawable/ic_fullscreen_white_18px" />
+        app:srcCompat="@drawable/ic_fullscreen_white_18px"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/choose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/user"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="106dp"
         android:text="Choose Video" />
 
 
