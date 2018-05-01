@@ -6,13 +6,14 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 
     <style name="AppTheme.AB" parent="Theme.AppCompat" tools:targetApi="lollipop">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
     </style>
     <style name="MyActionBar" parent="@android:style/Widget.Material.ActionBar" tools:targetApi="lollipop" >
-        <item name="android:background">#FF27AE60</item>
+        <item name="android:background">@color/NBABlue</item>
     </style>
 
     <style

@@ -11,7 +11,7 @@
         android:id="@+id/google_pixe"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#000000"
+        android:background="#ffffff"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp"
         tools:ignore="MissingConstraints">
@@ -24,7 +24,11 @@
             android:background="@android:color/transparent"
             android:cacheColorHint="@android:color/transparent"
             android:dividerHeight="1dp"
-            android:paddingLeft="2dp" >
+            android:divider="@color/NBABlue"
+            android:paddingLeft="2dp"
+            android:paddingStart="2dp"
+            android:paddingRight="2dp"
+            android:paddingEnd="2dp" >
         </ListView>
     </RelativeLayout>
 

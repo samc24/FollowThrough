@@ -12,7 +12,7 @@
         android:id="@+id/google_pixe"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#000000">
+        android:background="#FFFFFF">
 
         <TextView
             android:id="@+id/follow_thro"
@@ -24,28 +24,30 @@
             android:gravity="center_horizontal"
             android:text="@string/follow_thro"
             android:textAppearance="@style/follow_thro"
-            android:textStyle="bold"
-            android:textColor="#FF27AE60">
+            android:textColor="#003da5"
+            android:textStyle="bold">
+
         </TextView>
 
         <View
-            android:id="@+id/logo1"
-            android:layout_width="112dp"
-            android:layout_height="439dp"
-            android:layout_below="@+id/follow_thro"
+            android:id="@+id/logobig"
+            android:layout_width="288dp"
+            android:layout_height="288dp"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/logo1" />
+            android:layout_marginTop="141dp"
+            android:background="@drawable/logobig" />
 
         <Button
-            android:id="@+id/login"
+            android:id="@+id/start"
             android:layout_width="167dp"
             android:layout_height="55dp"
-            android:layout_below="@+id/logo1"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="17dp"
-            android:background="#FF27AE60"
+            android:layout_marginBottom="40dp"
+            android:background="#003da5"
             android:gravity="center"
-            android:text="Login"
+            android:text="START"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
             android:textStyle="bold" />

@@ -6,6 +6,7 @@ Follow Through
 </string>
     <string name="fullscreen">Fullscreen</string>
     <string name="play">Play</string>
+    <string name="choose">Choose Video</string>
     <string-array name="pros">
         <item>Stephen Curry</item>
         <item>Kobe Bryant</item>

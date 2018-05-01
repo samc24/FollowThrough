@@ -9,6 +9,7 @@ public class Player { //representation of data.
     long id;
     String playerName;
     String localFileURI;
+    boolean favorite;
 
     public Player(long id, String playerName, String localFileURI){
         this.id = id;
@@ -45,4 +46,14 @@ public class Player { //representation of data.
         return this.localFileURI;
     }
 
+    public boolean isFavorite(){
+        return this.favorite;
+    }
+
+    public void setFavorite() {
+        this.favorite = true;
+    }
+    public void unsetFavorite(){
+        this.favorite = false;
+    }
 }

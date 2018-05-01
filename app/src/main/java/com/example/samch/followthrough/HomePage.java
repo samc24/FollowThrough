@@ -38,21 +38,22 @@ public class HomePage extends AppCompatActivity {
             playerNames.add(players.get(i).getPlayerName());
         }
         // sort pros array (mergesort?)
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF27AE60")));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#003da5")));
 //        ArrayAdapter adapter = (new ArrayAdapter<String>(this, R.layout.list_item,
   //              getResources().getStringArray(R.array.pros)));
         ArrayAdapter adapter = (new ArrayAdapter<String>(this, R.layout.list_item,
                  playerNames.toArray(new String[playerNames.size()])));
+        PlayerAdapter playerArrayAdapter = (new PlayerAdapter(this,R.layout.player_item, players.toArray(),playersBox));
         ListView lv = findViewById(R.id.proList);
-        lv.setAdapter(adapter);
+        lv.setAdapter(playerArrayAdapter);
 
         //lv.setTextFilterEnabled(true);
         lv.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(),((TextView)view).getText(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),((TextView)view).getText(), Toast.LENGTH_SHORT).show();
                 Intent compare = new Intent(HomePage.this, UserVPro.class);
-                compare.putExtra("Pro", ((TextView)view).getText());
+                //compare.putExtra("Pro", ((TextView)view).getText());
                 compare.putExtra("ProId", players.get(i).getId());
                 startActivity(compare);
             }
