@@ -47,6 +47,7 @@
         android:id="@+id/user"
         android:layout_width="103dp"
         android:layout_height="97dp"
+        android:layout_toStartOf="@+id/strut"
         android:layout_alignEnd="@+id/videoView2"
         android:layout_alignRight="@+id/videoView2"
         android:layout_alignTop="@+id/pro"
@@ -65,10 +66,11 @@
         android:id="@+id/pro"
         android:layout_width="103dp"
         android:layout_height="97dp"
+        android:layout_toStartOf="@+id/strut"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginEnd="83dp"
-        android:layout_marginRight="83dp"
+        android:layout_marginEnd="110dp"
+        android:layout_marginRight="110dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:background="@android:color/transparent"
@@ -114,24 +116,63 @@
         android:id="@+id/choose"
         android:layout_width="119dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginStart="98dp"
-        android:layout_marginLeft="98dp"
+        android:layout_toStartOf="@+id/strut"
         android:background="@android:color/transparent"
+        android:contentDescription="@string/choose"
         app:srcCompat="@drawable/choose"
-        android:contentDescription="@string/choose"/>
+        android:layout_marginEnd="110dp"
+        android:layout_marginRight="110dp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/chooseTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/pro"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="114dp"
+        android:layout_marginStart="148dp"
         android:text="Choose Video"
-        android:textColor="@color/NBABlue" />
+        android:textColor="@color/NBABlue"
+        tools:ignore="UnknownId" />
+
+    <SeekBar
+        android:id="@+id/speed1"
+        android:layout_width="296dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/strut"
+        android:layout_marginBottom="16dp"
+        android:max="200"
+        android:progress="100"
+        android:thumbTint="@color/NBARed"
+        android:progressTint="@color/NBABlue"/>
+
+    <SeekBar
+        android:id="@+id/speed2"
+        android:layout_width="296dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/speed1"
+        android:max="200"
+        android:progress="100"
+        android:progressTint="@color/NBABlue"
+        android:thumbTint="@color/NBARed"
+        android:visibility="gone"/>
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/speed1"
+        android:layout_alignParentEnd="true" />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/speed1"
+        android:layout_toEndOf="@+id/speed2"
+        android:visibility="gone"/>
 
 
 </RelativeLayout>

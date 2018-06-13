@@ -7,6 +7,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.app.ListActivity;
 import android.os.Bundle;
+import android.transition.Explode;
+import android.transition.Fade;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -30,6 +32,7 @@ public class HomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+        //getWindow().setEnterTransition(new Fade());
         setTheme(R.style.AppTheme_AB);
         playersBox = ((App)getApplication()).getBoxStore().boxFor(Player.class);
         //playersBox = (MyObjectBox.builder().androidContext(HomePage.this).build()).boxFor(Player.class);
@@ -41,9 +44,9 @@ public class HomePage extends AppCompatActivity {
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#003da5")));
 //        ArrayAdapter adapter = (new ArrayAdapter<String>(this, R.layout.list_item,
   //              getResources().getStringArray(R.array.pros)));
-        ArrayAdapter adapter = (new ArrayAdapter<String>(this, R.layout.list_item,
+        final ArrayAdapter adapter = (new ArrayAdapter<String>(this, R.layout.list_item,
                  playerNames.toArray(new String[playerNames.size()])));
-        PlayerAdapter playerArrayAdapter = (new PlayerAdapter(this,R.layout.player_item, players.toArray(),playersBox));
+        final PlayerAdapter playerArrayAdapter = (new PlayerAdapter(this,R.layout.player_item, players.toArray(),playersBox));
         ListView lv = findViewById(R.id.proList);
         lv.setAdapter(playerArrayAdapter);
 

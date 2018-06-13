@@ -46,6 +46,10 @@ public class Player { //representation of data.
         return this.localFileURI;
     }
 
+    public void setLocalFileURI(String localFileURI) {
+        this.localFileURI = localFileURI;
+    }
+
     public boolean isFavorite(){
         return this.favorite;
     }

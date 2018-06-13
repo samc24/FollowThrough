@@ -1,9 +1,12 @@
 package com.example.samch.followthrough;
 
+import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.media.PlaybackParams;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,11 +15,18 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.objectbox.Box;
 
@@ -33,6 +43,10 @@ public class UserVPro extends AppCompatActivity {
     public Uri uri1;
     public String path;
     public TextView chooseTxt;
+    public SeekBar speed1, speed2;
+    public int progress;
+    public Spinner spinner1, spinner2;
+    public ArrayAdapter<Double> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +112,27 @@ public class UserVPro extends AppCompatActivity {
         playerId = getIntent().getExtras().getLong("ProId");
         playersBox = ((App) getApplication()).getBoxStore().boxFor(Player.class);
         player = playersBox.get(playerId);
+        speed1 = (SeekBar)findViewById(R.id.speed1);
         uri1 = Uri.parse(player.getLocalFileURI());
+
+        speed1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                //pro.setVisibility(View.INVISIBLE);
+                progress = i;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
         pro.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,8 +141,9 @@ public class UserVPro extends AppCompatActivity {
                 //mVideoView1.requestFocus();
                 mVideoView1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
 
+                    @TargetApi(Build.VERSION_CODES.M)
                     @Override
-                    public void onPrepared(MediaPlayer mp) {
+                    public void onPrepared(final MediaPlayer mp) {
                         /*
                         int videoWidth = mp.getVideoWidth();
                         int videoHeight = mp.getVideoHeight();
@@ -127,6 +162,9 @@ public class UserVPro extends AppCompatActivity {
                         mVideoView1.setLayoutParams(lp);
                          */
 
+                        mp.setPlaybackParams(mp.getPlaybackParams().setSpeed(progress/100.0f));
+
+                        Log.d("App","videoOnPrepared");
                         mp.setVolume(0.0f, 0.0f);
                     }
                 });
@@ -134,7 +172,7 @@ public class UserVPro extends AppCompatActivity {
             }
         });
         mVideoView1.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            public void onCompletion(MediaPlayer mp) {
+            public void onCompletion(final MediaPlayer mp) {
                 Log.d("App","Video Complete");
                 mp.setVolume(0.0f, 0.0f);
                 pro.setVisibility(View.VISIBLE);
@@ -150,6 +188,37 @@ public class UserVPro extends AppCompatActivity {
                 // mVideoView1.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT));
             }
         });
+        List<Double> spinnerArray = new ArrayList<Double>();
+        spinnerArray.add(0.25);
+        spinnerArray.add(0.50);
+        spinnerArray.add(0.75);
+        spinnerArray.add(1.00);
+        spinnerArray.add(1.25);
+        spinnerArray.add(1.50);
+        spinnerArray.add(1.75);
+        spinnerArray.add(2.00);
+        adapter = new ArrayAdapter<Double>(this,
+                R.layout.change_speed, spinnerArray);
+        adapter.setDropDownViewResource(R.layout.change_speed);
+        spinner1 = findViewById(R.id.spinner1);
+        spinner1.setAdapter(adapter);
+        spinner1.setSelection(3);
+        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                onResume();
+                Object item = adapterView.getItemAtPosition(i);
+                Toast.makeText(adapterView.getContext(), "Speed: " + item, Toast.LENGTH_SHORT).show();
+                if(item!=null) {
+                    progress = (int) (Double.parseDouble(item.toString()) * 100);
+                    speed1.setProgress(progress);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
     }
 
@@ -159,22 +228,67 @@ public class UserVPro extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 mVideoView2 = findViewById(R.id.videoView2);
                 mVideoView2.setVisibility(View.VISIBLE);
+                speed2 = findViewById(R.id.speed2);
+                speed2.setVisibility(View.VISIBLE);
+                spinner2 = findViewById(R.id.spinner2);
+                spinner2.setVisibility(View.VISIBLE);
+                spinner2.setAdapter(adapter);
+                spinner2.setSelection(3);
+                spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        onResume();
+                        Object item = adapterView.getItemAtPosition(i);
+                        Toast.makeText(adapterView.getContext(), "Speed: " + item, Toast.LENGTH_SHORT).show();
+                        if(item!=null) {
+                            progress = (int) (Double.parseDouble(item.toString()) * 100);
+                            speed2.setProgress(progress);
+                        }
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
                 mVideoView2.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
 
                     @Override
-                    public void onPrepared(MediaPlayer mp) {
+                    public void onPrepared(final MediaPlayer mp) {
                         Log.d("App","videoOnPrepared");
                         mp.setVolume(0.0f, 0.0f);
+                        speed2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                            @TargetApi(Build.VERSION_CODES.M)
+                            @Override
+                            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+
+                                user.setVisibility(View.INVISIBLE);
+                                progress = i;
+                                mp.setPlaybackParams(mp.getPlaybackParams().setSpeed(progress/100.0f));
+
+                            }
+
+                            @Override
+                            public void onStartTrackingTouch(SeekBar seekBar) {
+
+                            }
+
+                            @Override
+                            public void onStopTrackingTouch(SeekBar seekBar) {
+
+                            }
+                        });
                     }
 
                 });
-                user = findViewById(R.id.user); // combine all these initializations in another method
+                    user = findViewById(R.id.user); // combine all these initializations in another method
                 user.setVisibility(View.VISIBLE);
                 userfs = findViewById(R.id.userfs);
                 userfs.setVisibility(View.VISIBLE);
                 choose.setVisibility(View.GONE);
                 path = data.getData().toString();
                 mVideoView2.setVideoPath(path);
+                chooseTxt = findViewById(R.id.chooseTxt);
+                chooseTxt.setVisibility(View.GONE);
                 user();
             }
         }
@@ -206,6 +320,8 @@ public class UserVPro extends AppCompatActivity {
 
             }
         });
+
+        user.setVisibility(View.VISIBLE);
         pro.setVisibility(View.VISIBLE); // DRY - dont repeat yourself. Make a sept method for this.
     }
 
