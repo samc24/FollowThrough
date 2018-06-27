@@ -3,15 +3,22 @@ package com.example.samch.followthrough;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
+import android.graphics.PixelFormat;
 import android.media.MediaPlayer;
 import android.media.PlaybackParams;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -19,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -47,6 +55,7 @@ public class UserVPro extends AppCompatActivity {
     public int progress;
     public Spinner spinner1, spinner2;
     public ArrayAdapter<Double> adapter;
+    public RelativeLayout userSide;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,9 +172,11 @@ public class UserVPro extends AppCompatActivity {
                          */
 
                         mp.setPlaybackParams(mp.getPlaybackParams().setSpeed(progress/100.0f));
+                        mp.setVideoScalingMode(MediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING);
 
                         Log.d("App","videoOnPrepared");
                         mp.setVolume(0.0f, 0.0f);
+
                     }
                 });
                 mVideoView1.start();
@@ -250,12 +261,38 @@ public class UserVPro extends AppCompatActivity {
 
                     }
                 });
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(UserVPro.this);
+                LayoutInflater inflater = UserVPro.this.getLayoutInflater();
+                builder.setView(inflater.inflate(R.layout.trim_dialog, null)).setPositiveButton("Done!", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                }).setNegativeButton("Select another video", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.create();
+                builder.setMessage("Trim your video!");
+                builder.show();
+
+
                 mVideoView2.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
 
                     @Override
                     public void onPrepared(final MediaPlayer mp) {
                         Log.d("App","videoOnPrepared");
                         mp.setVolume(0.0f, 0.0f);
+
+                        mp.seekTo(0); //TODO: implement a slider so user can choose starting point
+
+
+                        if(mp.getCurrentPosition()>=3500) //TODO: implement a slider so user can choose ending point
+                            mVideoView2.stopPlayback(); // TODO: reset the video at this point
+
                         speed2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                             @TargetApi(Build.VERSION_CODES.M)
                             @Override
@@ -286,9 +323,27 @@ public class UserVPro extends AppCompatActivity {
                 userfs.setVisibility(View.VISIBLE);
                 choose.setVisibility(View.GONE);
                 path = data.getData().toString();
+
+//                Intent trimVideoIntent = new Intent("com.android.camera.action.TRIM");
+////
+////// The key for the extra has been discovered from com.android.gallery3d.app.PhotoPage.KEY_MEDIA_ITEM_PATH
+////                trimVideoIntent.putExtra("User Video",path);
+////                trimVideoIntent.setData(Uri.parse(path));
+////
+////// Check if the device can handle the Intent
+////                List<ResolveInfo> list = getPackageManager().queryIntentActivities(trimVideoIntent, 0);
+////                if (null != list && list.size() > 0) {
+////                    startActivity(trimVideoIntent); // Fires TrimVideo activity into being active
+////                }else {
+////                    Toast.makeText(this, "not supported",Toast.LENGTH_SHORT).show();
+////                }
+
                 mVideoView2.setVideoPath(path);
                 chooseTxt = findViewById(R.id.chooseTxt);
                 chooseTxt.setVisibility(View.GONE);
+                userSide = findViewById(R.id.userSide);
+                //userSide.setZ();
+                //ViewCompat.setTranslationZ(userSide, 0.0f);
                 user();
             }
         }
@@ -309,6 +364,9 @@ public class UserVPro extends AppCompatActivity {
         mVideoView2.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             public void onCompletion(MediaPlayer mp) {
                 mp.setVolume(0.0f, 0.0f);
+
+                mp.seekTo(0); //TODO: implement a slider so user can choose starting point
+
                 user.setVisibility(View.VISIBLE);
             }
         });

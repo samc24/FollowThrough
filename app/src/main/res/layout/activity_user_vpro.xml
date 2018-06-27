@@ -1,178 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff"
-    tools:context="com.example.samch.followthrough.UserVPro"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp">
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/Outermost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:baselineAligned="false"
+        tools:context="com.example.samch.followthrough.UserVPro"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
-    <View android:id="@+id/strut"
+
+        <RelativeLayout
+            android:id="@+id/proSide"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clipChildren="true"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_alignParentStart="true">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="true"
+                android:fillViewport="true"
+                android:scrollbars="vertical"
+                android:layout_alignParentStart="true">
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="true"
+                    android:fillViewport="true">
+
+                    <VideoView
+                        android:id="@+id/videoView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:clipChildren="true"/>
+
+                </HorizontalScrollView>
+            </ScrollView>
+
+            <ImageButton
+                android:id="@+id/pro"
+                android:layout_width="103dp"
+                android:layout_height="97dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="110dp"
+                android:layout_marginRight="110dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/play"
+                android:src="@android:drawable/ic_media_play"
+                android:tint="#ffffff"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="97dp"
+                tools:layout_editor_absoluteY="95dp" />
+
+            <ImageButton
+                android:id="@+id/profs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="11dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/fullscreen"
+                android:tint="#ffffff"
+                app:srcCompat="@drawable/ic_fullscreen_white_18px" />
+
+
+            <SeekBar
+                android:id="@+id/speed1"
+                android:layout_width="296dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="16dp"
+                android:max="200"
+                android:progress="100"
+                android:progressTint="@color/NBABlue"
+                android:thumbTint="@color/NBARed"
+                tools:targetApi="lollipop" />
+
+
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="47dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/speed1"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="0dp" />
+
+        </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/userSide"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_weight="5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
-    <VideoView
-        android:id="@+id/videoView1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="365.5dp"
-        android:layout_marginStart="365.5dp"/>
-
-    <VideoView
-        android:id="@+id/videoView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerVertical="true"
-        android:visibility="gone"
-        android:layout_marginRight="365.5dp"
-        android:layout_marginEnd="365.5dp"/>
-
-    <ImageButton
-        android:id="@+id/user"
-        android:layout_width="103dp"
-        android:layout_height="97dp"
-        android:layout_toStartOf="@+id/strut"
-        android:layout_alignEnd="@+id/videoView2"
-        android:layout_alignRight="@+id/videoView2"
-        android:layout_alignTop="@+id/pro"
-        android:layout_marginEnd="110dp"
-        android:layout_marginRight="110dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/play"
-        android:src="@android:drawable/ic_media_play"
-        android:tint="#ffffff"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="97dp"
-        tools:layout_editor_absoluteY="95dp"
-        android:visibility="gone"/>
-
-    <ImageButton
-        android:id="@+id/pro"
-        android:layout_width="103dp"
-        android:layout_height="97dp"
-        android:layout_toStartOf="@+id/strut"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="110dp"
-        android:layout_marginRight="110dp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/play"
-        android:src="@android:drawable/ic_media_play"
-        android:tint="#ffffff"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="97dp"
-        tools:layout_editor_absoluteY="95dp" />
-
-    <ImageButton
-        android:id="@+id/profs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/videoView1"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/videoView1"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="19dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/fullscreen"
-        android:tint="#ffffff"
-        app:srcCompat="@drawable/ic_fullscreen_white_18px" />
-
-    <ImageButton
-        android:id="@+id/userfs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/videoView2"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/videoView2"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="19dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/fullscreen"
-        android:tint="#ffffff"
-        app:srcCompat="@drawable/ic_fullscreen_white_18px"
-        android:visibility="gone"/>
-
-    <ImageButton
-        android:id="@+id/choose"
-        android:layout_width="119dp"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toStartOf="@+id/strut"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/choose"
-        app:srcCompat="@drawable/choose"
-        android:layout_marginEnd="110dp"
-        android:layout_marginRight="110dp" />
-
-    <TextView
-        android:id="@+id/chooseTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/pro"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="148dp"
-        android:text="Choose Video"
-        android:textColor="@color/NBABlue"
-        tools:ignore="UnknownId" />
-
-    <SeekBar
-        android:id="@+id/speed1"
-        android:layout_width="296dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/strut"
-        android:layout_marginBottom="16dp"
-        android:max="200"
-        android:progress="100"
-        android:thumbTint="@color/NBARed"
-        android:progressTint="@color/NBABlue"/>
-
-    <SeekBar
-        android:id="@+id/speed2"
-        android:layout_width="296dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/speed1"
-        android:max="200"
-        android:progress="100"
-        android:progressTint="@color/NBABlue"
-        android:thumbTint="@color/NBARed"
-        android:visibility="gone"/>
-
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/speed1"
-        android:layout_alignParentEnd="true" />
-
-    <Spinner
-        android:id="@+id/spinner2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/speed1"
-        android:layout_toEndOf="@+id/speed2"
-        android:visibility="gone"/>
+        <View
+            android:id="@+id/overlap"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
+            android:visibility="gone" />
 
 
-</RelativeLayout>
+        <ScrollView
+            android:id="@+id/userScroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/overlap"
+            android:fillViewport="true"
+            android:scrollbars="vertical">
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true">
+
+                <VideoView
+                    android:id="@+id/videoView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+
+
+            </HorizontalScrollView>
+        </ScrollView>
+
+        <ImageButton
+            android:id="@+id/user"
+            android:layout_width="103dp"
+            android:layout_height="97dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="110dp"
+            android:layout_marginRight="110dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/play"
+            android:src="@android:drawable/ic_media_play"
+            android:tint="#ffffff"
+            android:visibility="gone"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="97dp"
+            tools:layout_editor_absoluteY="95dp" />
+
+        <ImageButton
+            android:id="@+id/userfs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/speed2"
+            android:layout_marginEnd="11dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/fullscreen"
+            android:tint="#ffffff"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_fullscreen_white_18px" />
+
+        <ImageButton
+            android:id="@+id/choose"
+            android:layout_width="119dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="146dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/choose"
+            android:visibility="visible"
+            app:srcCompat="@drawable/choose" />
+
+        <TextView
+            android:id="@+id/chooseTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="161dp"
+            android:text="@string/choose"
+            android:textColor="@color/NBABlue"
+            android:visibility="visible"
+            tools:ignore="UnknownId" />
+
+        <SeekBar
+            android:id="@+id/speed2"
+            android:layout_width="296dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:max="200"
+            android:progress="100"
+            android:progressTint="@color/NBABlue"
+            android:thumbTint="@color/NBARed"
+            android:visibility="gone"
+            tools:targetApi="lollipop" />
+
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/speed2"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="0dp"
+            android:layout_toEndOf="@+id/speed2"
+            android:visibility="gone" />
+
+
+    </RelativeLayout>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+
+    </android.support.constraint.ConstraintLayout>

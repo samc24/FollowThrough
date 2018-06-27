@@ -55,7 +55,7 @@ public class Startup extends AppCompatActivity {
         Player[] players = new Player[100];
         players[0]= new Player("Stephen Curry","android.resource://com.example.samch.followthrough/" + R.raw.stephform);
         players[1] = new Player("Damian Lillard", "android.resource://com.example.samch.followthrough/" + R.raw.dameform);
-        players[2] = new Player("Lebron James", "android.resource://com.example.samch.followthrough/" + R.raw.lebroncrop);
+        players[2] = new Player("Lebron James", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
         for (int i = 0; i < players.length; i++) {
             if (players[i] != null) {
                 QueryBuilder<Player> builder = playersBox.query();
