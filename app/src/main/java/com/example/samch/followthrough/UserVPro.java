@@ -18,6 +18,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.Window;
@@ -33,6 +34,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.appyvet.materialrangebar.RangeBar;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,8 +47,8 @@ import static android.media.AudioManager.AUDIOFOCUS_NONE;
 public class UserVPro extends AppCompatActivity {
     public static final int PICK_VIDEO_REQUEST = 1;
     public ImageButton choose;
-    public VideoView mVideoView1, mVideoView2;
-    public ImageButton user, pro, userfs, profs;
+    public VideoView mVideoView1, mVideoView2, preview;
+    public ImageButton user, pro, userfs, profs, previewPlay, compare;
     public long playerId;
     public Box<Player> playersBox;
     public Player player;
@@ -52,10 +56,15 @@ public class UserVPro extends AppCompatActivity {
     public String path;
     public TextView chooseTxt;
     public SeekBar speed1, speed2;
-    public int progress;
+    public int progress, duration;
     public Spinner spinner1, spinner2;
     public ArrayAdapter<Double> adapter;
-    public RelativeLayout userSide;
+    public RangeBar trimmer;
+    public MediaPlayer mediaPlayer, previewMp;
+    public float start = 0, end = 4, innerEnd;
+    public RelativeLayout proSide, userSide;
+    public LayoutInflater inflater;
+    public View v;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +72,9 @@ public class UserVPro extends AppCompatActivity {
         //Toast.makeText(getApplicationContext(),"onCreate", Toast.LENGTH_SHORT).show();
 
         setContentView(R.layout.activity_user_vpro);
+        proSide = findViewById(R.id.proSide);
+        userSide = findViewById(R.id.userSide);
+        compare = findViewById(R.id.compare);
 
         this.getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -73,6 +85,14 @@ public class UserVPro extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
         pro();
+
+        compare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                user.performClick();
+                pro.performClick();
+            }
+        });
 
         choose = findViewById(R.id.choose);
         choose.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +132,8 @@ public class UserVPro extends AppCompatActivity {
         });
 
 
+
+
     }
 
     public void pro() {
@@ -121,7 +143,7 @@ public class UserVPro extends AppCompatActivity {
         playerId = getIntent().getExtras().getLong("ProId");
         playersBox = ((App) getApplication()).getBoxStore().boxFor(Player.class);
         player = playersBox.get(playerId);
-        speed1 = (SeekBar)findViewById(R.id.speed1);
+        speed1 = (SeekBar) findViewById(R.id.speed1);
         uri1 = Uri.parse(player.getLocalFileURI());
 
         speed1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -171,10 +193,10 @@ public class UserVPro extends AppCompatActivity {
                         mVideoView1.setLayoutParams(lp);
                          */
 
-                        mp.setPlaybackParams(mp.getPlaybackParams().setSpeed(progress/100.0f));
+                        mp.setPlaybackParams(mp.getPlaybackParams().setSpeed(progress / 100.0f));
                         mp.setVideoScalingMode(MediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING);
 
-                        Log.d("App","videoOnPrepared");
+                        Log.d("App", "videoOnPrepared");
                         mp.setVolume(0.0f, 0.0f);
 
                     }
@@ -184,7 +206,7 @@ public class UserVPro extends AppCompatActivity {
         });
         mVideoView1.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             public void onCompletion(final MediaPlayer mp) {
-                Log.d("App","Video Complete");
+                Log.d("App", "Video Complete");
                 mp.setVolume(0.0f, 0.0f);
                 pro.setVisibility(View.VISIBLE);
 
@@ -219,12 +241,13 @@ public class UserVPro extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 onResume();
                 Object item = adapterView.getItemAtPosition(i);
-                Toast.makeText(adapterView.getContext(), "Speed: " + item, Toast.LENGTH_SHORT).show();
-                if(item!=null) {
+                //Toast.makeText(adapterView.getContext(), "Speed: " + item, Toast.LENGTH_SHORT).show();
+                if (item != null) {
                     progress = (int) (Double.parseDouble(item.toString()) * 100);
                     speed1.setProgress(progress);
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -237,37 +260,20 @@ public class UserVPro extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_VIDEO_REQUEST) {
             if (resultCode == RESULT_OK) {
-                mVideoView2 = findViewById(R.id.videoView2);
-                mVideoView2.setVisibility(View.VISIBLE);
-                speed2 = findViewById(R.id.speed2);
-                speed2.setVisibility(View.VISIBLE);
-                spinner2 = findViewById(R.id.spinner2);
-                spinner2.setVisibility(View.VISIBLE);
-                spinner2.setAdapter(adapter);
-                spinner2.setSelection(3);
-                spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        onResume();
-                        Object item = adapterView.getItemAtPosition(i);
-                        Toast.makeText(adapterView.getContext(), "Speed: " + item, Toast.LENGTH_SHORT).show();
-                        if(item!=null) {
-                            progress = (int) (Double.parseDouble(item.toString()) * 100);
-                            speed2.setProgress(progress);
-                        }
-                    }
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });
-
+                path = data.getData().toString();
                 AlertDialog.Builder builder = new AlertDialog.Builder(UserVPro.this);
-                LayoutInflater inflater = UserVPro.this.getLayoutInflater();
-                builder.setView(inflater.inflate(R.layout.trim_dialog, null)).setPositiveButton("Done!", new DialogInterface.OnClickListener() {
+                inflater = UserVPro.this.getLayoutInflater();
+                v = inflater.inflate(R.layout.trim_dialog, null);
+                builder.setView(v);
+                builder.create();
+                trimPreview();
+                builder.setPositiveButton("Done!", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        start = trimmer.getLeftIndex() / 10.0f;
+                        end = trimmer.getRightIndex() / 10.0f;
+                        compare.setVisibility(View.VISIBLE);
+                        user();
                     }
                 }).setNegativeButton("Select another video", new DialogInterface.OnClickListener() {
                     @Override
@@ -275,101 +281,170 @@ public class UserVPro extends AppCompatActivity {
 
                     }
                 });
-                builder.create();
                 builder.setMessage("Trim your video!");
+                builder.setCancelable(false);
                 builder.show();
-
-
-                mVideoView2.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-
-                    @Override
-                    public void onPrepared(final MediaPlayer mp) {
-                        Log.d("App","videoOnPrepared");
-                        mp.setVolume(0.0f, 0.0f);
-
-                        mp.seekTo(0); //TODO: implement a slider so user can choose starting point
-
-
-                        if(mp.getCurrentPosition()>=3500) //TODO: implement a slider so user can choose ending point
-                            mVideoView2.stopPlayback(); // TODO: reset the video at this point
-
-                        speed2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                            @TargetApi(Build.VERSION_CODES.M)
-                            @Override
-                            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-
-                                user.setVisibility(View.INVISIBLE);
-                                progress = i;
-                                mp.setPlaybackParams(mp.getPlaybackParams().setSpeed(progress/100.0f));
-
-                            }
-
-                            @Override
-                            public void onStartTrackingTouch(SeekBar seekBar) {
-
-                            }
-
-                            @Override
-                            public void onStopTrackingTouch(SeekBar seekBar) {
-
-                            }
-                        });
-                    }
-
-                });
-                    user = findViewById(R.id.user); // combine all these initializations in another method
-                user.setVisibility(View.VISIBLE);
-                userfs = findViewById(R.id.userfs);
-                userfs.setVisibility(View.VISIBLE);
-                choose.setVisibility(View.GONE);
-                path = data.getData().toString();
-
-//                Intent trimVideoIntent = new Intent("com.android.camera.action.TRIM");
-////
-////// The key for the extra has been discovered from com.android.gallery3d.app.PhotoPage.KEY_MEDIA_ITEM_PATH
-////                trimVideoIntent.putExtra("User Video",path);
-////                trimVideoIntent.setData(Uri.parse(path));
-////
-////// Check if the device can handle the Intent
-////                List<ResolveInfo> list = getPackageManager().queryIntentActivities(trimVideoIntent, 0);
-////                if (null != list && list.size() > 0) {
-////                    startActivity(trimVideoIntent); // Fires TrimVideo activity into being active
-////                }else {
-////                    Toast.makeText(this, "not supported",Toast.LENGTH_SHORT).show();
-////                }
-
-                mVideoView2.setVideoPath(path);
-                chooseTxt = findViewById(R.id.chooseTxt);
-                chooseTxt.setVisibility(View.GONE);
-                userSide = findViewById(R.id.userSide);
-                //userSide.setZ();
-                //ViewCompat.setTranslationZ(userSide, 0.0f);
-                user();
             }
         }
     }
 
+    public void trimPreview() {
+        trimmer = v.findViewById(R.id.trimmer);
+        preview = v.findViewById(R.id.preview);
+        previewMp = MediaPlayer.create(this, Uri.parse(path));
+        duration = previewMp.getDuration();
+        preview.setVideoPath(path);
+        preview.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(final MediaPlayer mp) {
+                mp.setVolume(0.0f, 0.0f);
+                mp.seekTo((int) (start * 1000));
+                trimmer.setTickEnd(duration / 1000.0f);
+                end = trimmer.getRightIndex() / 10.0f;
+                innerEnd = end;
+                Toast.makeText(getApplicationContext(), "Duration: " + (innerEnd - start) + " seconds", Toast.LENGTH_SHORT).show();
+                trimmer.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+                    @Override
+                    public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
+                        start = leftPinIndex / 10.0f;
+                        innerEnd = rightPinIndex / 10.0f;
+                    }
+                });
+            }
+        });
+
+        previewPlay = v.findViewById(R.id.previewPlay);
+
+        previewPlay.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                previewPlay.setVisibility(View.INVISIBLE);
+                preview.start();
+                preview.postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        preview.stopPlayback();
+                        trimPreview(); // maybe instead of this, add the body og onComplete method
+                    }
+                }, (long) (innerEnd - start) * 1000);
+            }
+        });
+        preview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() { // this is never called because of stopPlayback
+            public void onCompletion(MediaPlayer mp) {
+                mp.setVolume(0.0f, 0.0f);
+                mp.seekTo((int) (start * 1000));
+                previewPlay.setVisibility(View.VISIBLE);
+            }
+        });
+        previewPlay.setVisibility(View.VISIBLE);
+
+
+    }
+
     public void user() {
+
+        mVideoView2 = findViewById(R.id.videoView2);
+        mVideoView2.setVisibility(View.VISIBLE);/*
+                mediaPlayer = new MediaPlayer();
+                try {
+                    mediaPlayer.setDataSource(data.getData().toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }*/
+        speed2 = findViewById(R.id.speed2);
+        speed2.setVisibility(View.VISIBLE);
+        spinner2 = findViewById(R.id.spinner2);
+        spinner2.setVisibility(View.VISIBLE);
+        spinner2.setAdapter(adapter);
+        spinner2.setSelection(3);
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                onResume();
+                Object item = adapterView.getItemAtPosition(i);
+                if (item != null) {
+                    progress = (int) (Double.parseDouble(item.toString()) * 100);
+                    speed2.setProgress(progress);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        mVideoView2.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+
+            @Override
+            public void onPrepared(final MediaPlayer mp) {
+                mp.setVolume(0.0f, 0.0f);
+                mp.seekTo((int) (start * 1000));
+                speed2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @TargetApi(Build.VERSION_CODES.M)
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+
+                        user.setVisibility(View.INVISIBLE);
+                        progress = i;/*
+                        mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                            @Override
+                            public void onPrepared(MediaPlayer mediaPlayer) {
+                                mp.setPlaybackParams(mp.getPlaybackParams().setSpeed(progress / 100.0f));
+
+                            }
+                        });*/
+                       try{
+                           mp.setPlaybackParams(mp.getPlaybackParams().setSpeed(progress / 100.0f)); //TODO: fix this... apparently mp is not prepared sometimes
+                       }catch (Exception e){
+                           Toast.makeText(getApplicationContext(), "Exception: " + e, Toast.LENGTH_SHORT).show();
+                       }
+
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                    }
+                });
+            }
+        });
+
+        user = findViewById(R.id.user); // combine all these initializations in another method
+        user.setVisibility(View.VISIBLE);
+        userfs = findViewById(R.id.userfs);
+        userfs.setVisibility(View.VISIBLE);
+        choose.setVisibility(View.GONE);
+        mVideoView2.setVideoPath(path);
+        chooseTxt = findViewById(R.id.chooseTxt);
+        chooseTxt.setVisibility(View.GONE);
+
         user.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 user.setVisibility(View.INVISIBLE);
-
-                Log.d("App","before start");
                 mVideoView2.start();
-                Log.d("App","after start");
-
+                mVideoView2.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mVideoView2.stopPlayback();
+                        user(); // maybe instead of this, add the body og onComplete method
+                    }
+                }, (long) (end - start) * 1000);
             }
         });
-        mVideoView2.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        mVideoView2.setOnCompletionListener(new MediaPlayer.OnCompletionListener() { // this is never called because of stopPlayback
             public void onCompletion(MediaPlayer mp) {
                 mp.setVolume(0.0f, 0.0f);
-
-                mp.seekTo(0); //TODO: implement a slider so user can choose starting point
-
+                mp.seekTo((int) (start * 1000));
                 user.setVisibility(View.VISIBLE);
             }
         });
+
         userfs = findViewById(R.id.userfs);
         userfs.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -406,3 +481,7 @@ public class UserVPro extends AppCompatActivity {
         pro();
     }*/
 }
+
+
+// Log: Log.d("App", "before start:" + start);
+// Toast: Toast.makeText(this, "duration: " + duration / 1000.0f + "seconds", Toast.LENGTH_SHORT).show();

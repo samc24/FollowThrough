@@ -27,7 +27,6 @@
 
         <activity
             android:name=".HomePage"
-            android:label="Choose a Pro"
             android:theme="@style/AppTheme.AB">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

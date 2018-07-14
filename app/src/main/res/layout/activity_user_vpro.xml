@@ -17,18 +17,19 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:clipChildren="true"
+            android:clipChildren="false"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            android:layoutAnimation="@anim/layout_item_slide_up">
 
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipChildren="true"
+                android:clipChildren="false"
                 android:fillViewport="true"
                 android:scrollbars="vertical"
                 android:layout_alignParentStart="true">
@@ -36,14 +37,14 @@
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clipChildren="true"
+                    android:clipChildren="false"
                     android:fillViewport="true">
 
                     <VideoView
                         android:id="@+id/videoView1"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:clipChildren="true"/>
+                        android:clipChildren="false"/>
 
                 </HorizontalScrollView>
             </ScrollView>
@@ -115,14 +116,22 @@
         app:layout_constraintHorizontal_weight="5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.0"
+        android:layoutAnimation="@anim/layout_item_slide_up">
 
-        <View
-            android:id="@+id/overlap"
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/transparent"
-            android:visibility="gone" />
+            android:alpha="0.2"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/logobig"
+            tools:ignore="ContentDescription"/>
 
 
         <ScrollView
@@ -196,11 +205,13 @@
             android:id="@+id/chooseTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/choose"
+            android:paddingTop="10dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="161dp"
             android:text="@string/choose"
             android:textColor="@color/NBABlue"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:visibility="visible"
             tools:ignore="UnknownId" />
 
@@ -236,5 +247,23 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5" />
 
+    <ImageButton
+        android:id="@+id/compare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976"
+        app:srcCompat="@drawable/compare" />
 
-    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

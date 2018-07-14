@@ -3,6 +3,7 @@ package com.example.samch.followthrough;
 import android.app.ActionBar;
 import android.app.Application;
 import android.content.Intent;
+import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,7 +39,7 @@ public class Startup extends AppCompatActivity {
         setContentView(R.layout.activity_startup);
 
         initializePlayerBox();
-        Button login = findViewById(R.id.start);
+        /*Button login = findViewById(R.id.start);
         login.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -47,7 +48,16 @@ public class Startup extends AppCompatActivity {
                                         }
                                     }
 
-        );
+        );*/
+        new Handler().postDelayed(new Runnable(){
+            @Override
+            public void run() {
+                /* Create an Intent that will start the Menu-Activity. */
+                Intent mainIntent = new Intent(Startup.this,HomePage.class);
+                startActivity(mainIntent);
+                Startup.this.finish();
+            }
+        }, 1500);
     }
 
     private void initializePlayerBox(){

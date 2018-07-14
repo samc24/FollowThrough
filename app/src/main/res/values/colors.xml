@@ -6,4 +6,6 @@
     <color name="NBABlue">#003da5</color>
     <color name="NBARed">#d50032</color>
     <color name="transparent">#80000000</color>
+    <color name="transparentW">#80FFFFFF</color>
+    <color name="transparentR">#80d50032</color>
 </resources>

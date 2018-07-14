@@ -10,8 +10,12 @@ import android.os.Bundle;
 import android.transition.Explode;
 import android.transition.Fade;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +38,7 @@ public class HomePage extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
         //getWindow().setEnterTransition(new Fade());
         setTheme(R.style.AppTheme_AB);
+        getSupportActionBar().setTitle("Choose a Pro");
         playersBox = ((App)getApplication()).getBoxStore().boxFor(Player.class);
         //playersBox = (MyObjectBox.builder().androidContext(HomePage.this).build()).boxFor(Player.class);
         players = playersBox.query().build().find();
@@ -53,7 +58,10 @@ public class HomePage extends AppCompatActivity {
         //lv.setTextFilterEnabled(true);
         lv.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {/*
+                Animation animation1 = new AlphaAnimation(0.3f, 1.0f);
+                animation1.setDuration(4000);
+                view.startAnimation(animation1);*/
                 //Toast.makeText(getApplicationContext(),((TextView)view).getText(), Toast.LENGTH_SHORT).show();
                 Intent compare = new Intent(HomePage.this, UserVPro.class);
                 //compare.putExtra("Pro", ((TextView)view).getText());

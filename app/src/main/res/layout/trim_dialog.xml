@@ -8,10 +8,28 @@
 
 
     <VideoView
-        android:id="@+id/videoView"
+        android:id="@+id/preview"
         android:layout_width="406dp"
         android:layout_height="203dp"
         android:layout_marginBottom="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.346" />
+
+    <com.appyvet.materialrangebar.RangeBar xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/trimmer"
+        android:layout_width="406dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -22,5 +40,42 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.346" />
+        app:layout_constraintVertical_bias="0.774"
+        app:mrb_pinMaxFont="10sp"
+        app:mrb_pinColor="@color/NBARed"
+        app:mrb_pinTextColor="#ffffff"
+        app:mrb_rangeBarPaddingBottom="12dp"
+        app:mrb_selectorColor="@color/NBARed"
+        app:mrb_selectorSize="10dp"
+        app:mrb_tickEnd="10"
+        app:mrb_tickInterval="0.1"
+        app:mrb_tickStart="0"
+        app:mrb_rangeBarColor="@color/NBABlue"
+        app:mrb_connectingLineColor="@color/NBARed"
+        />
+
+    <ImageButton
+        android:id="@+id/previewPlay"
+        android:layout_width="103dp"
+        android:layout_height="97dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/play"
+        android:src="@android:drawable/ic_media_play"
+        android:tint="#ffffff"
+        app:layout_constraintBottom_toBottomOf="@+id/preview"
+        app:layout_constraintEnd_toEndOf="@+id/preview"
+        app:layout_constraintStart_toStartOf="@+id/preview"
+        app:layout_constraintTop_toTopOf="@+id/preview"
+        tools:ignore="MissingConstraints" />
+
 </android.support.constraint.ConstraintLayout>
