@@ -27,11 +27,12 @@
 
         <activity
             android:name=".HomePage"
-            android:theme="@style/AppTheme.AB">
+            android:theme="@style/AppTheme"
+            android:label="Choose a Pro">
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
 

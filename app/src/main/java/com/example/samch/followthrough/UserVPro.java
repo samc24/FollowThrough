@@ -3,6 +3,7 @@ package com.example.samch.followthrough;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.ResolveInfo;
 import android.graphics.PixelFormat;
 import android.media.MediaPlayer;
@@ -10,7 +11,9 @@ import android.media.PlaybackParams;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +21,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -65,16 +69,42 @@ public class UserVPro extends AppCompatActivity {
     public RelativeLayout proSide, userSide;
     public LayoutInflater inflater;
     public View v;
+    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         //Toast.makeText(getApplicationContext(),"onCreate", Toast.LENGTH_SHORT).show();
 
         setContentView(R.layout.activity_user_vpro);
         proSide = findViewById(R.id.proSide);
         userSide = findViewById(R.id.userSide);
         compare = findViewById(R.id.compare);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // set item as selected to persist highlight
+                        menuItem.setChecked(true); //changing the list item's style to be highlighted because the list items are part of a checkable group
+                        // close drawer when item is tapped
+                        mDrawerLayout.closeDrawers();
+
+                        Toast.makeText(getApplicationContext(), "Selected:" + menuItem.toString(), Toast.LENGTH_LONG).show();
+
+                        // Add code here to update the UI based on the item selected
+                        // For example, swap UI fragments here
+                        // If your app switches out content based on which navigation menu item the user selects, you should consider using fragments in the main content area. Swapping fragments when you navigate from the navigation drawer allows for a seamless drawer animation, because the same base layout stays in place. To learn how to build your layout with fragments, see the Fragments documentation.
+
+                        //TODO: add suitable items. Maybe have: all cardview categories for easy access; access to duos; etc
+
+                        return true;
+                    }
+                });
+
 
         this.getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -132,8 +162,6 @@ public class UserVPro extends AppCompatActivity {
         });
 
 
-
-
     }
 
     public void pro() {
@@ -144,7 +172,9 @@ public class UserVPro extends AppCompatActivity {
         playersBox = ((App) getApplication()).getBoxStore().boxFor(Player.class);
         player = playersBox.get(playerId);
         speed1 = (SeekBar) findViewById(R.id.speed1);
+        Log.d("App", "file uri:" + player.getLocalFileURI());
         uri1 = Uri.parse(player.getLocalFileURI());
+        Log.d("App", "parsed uri:" + uri1);
 
         speed1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -169,7 +199,7 @@ public class UserVPro extends AppCompatActivity {
             public void onClick(View v) {
                 pro.setVisibility(View.INVISIBLE);
                 mVideoView1.setVideoURI(uri1);
-                //mVideoView1.requestFocus();
+//                mVideoView1.requestFocus();
                 mVideoView1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
 
                     @TargetApi(Build.VERSION_CODES.M)
@@ -193,7 +223,14 @@ public class UserVPro extends AppCompatActivity {
                         mVideoView1.setLayoutParams(lp);
                          */
 
-                        mp.setPlaybackParams(mp.getPlaybackParams().setSpeed(progress / 100.0f));
+                        try {
+                            mp.setPlaybackParams(mp.getPlaybackParams().setSpeed(progress / 100.0f)); //TODO: fix this... apparently mp is not prepared sometimes
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), "Exception: " + e, Toast.LENGTH_SHORT).show();
+                            Log.e("Exception: ", e + "");
+                        }
+
+
                         mp.setVideoScalingMode(MediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING);
 
                         Log.d("App", "videoOnPrepared");
@@ -236,6 +273,7 @@ public class UserVPro extends AppCompatActivity {
         spinner1 = findViewById(R.id.spinner1);
         spinner1.setAdapter(adapter);
         spinner1.setSelection(3);
+        
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -250,7 +288,7 @@ public class UserVPro extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
+                onResume();
             }
         });
 
@@ -308,6 +346,8 @@ public class UserVPro extends AppCompatActivity {
                     public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
                         start = leftPinIndex / 10.0f;
                         innerEnd = rightPinIndex / 10.0f;
+                        if (!mp.isPlaying())
+                            mp.seekTo((int) (start * 1000));
                     }
                 });
             }
@@ -371,7 +411,7 @@ public class UserVPro extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
+                onResume();
             }
         });
 
@@ -395,11 +435,12 @@ public class UserVPro extends AppCompatActivity {
 
                             }
                         });*/
-                       try{
-                           mp.setPlaybackParams(mp.getPlaybackParams().setSpeed(progress / 100.0f)); //TODO: fix this... apparently mp is not prepared sometimes
-                       }catch (Exception e){
-                           Toast.makeText(getApplicationContext(), "Exception: " + e, Toast.LENGTH_SHORT).show();
-                       }
+                        try {
+                            mp.setPlaybackParams(mp.getPlaybackParams().setSpeed(progress / 100.0f)); //TODO: fix this... apparently mp is not prepared sometimes, trimmed video or untrimmed.
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), "Exception: " + e, Toast.LENGTH_SHORT).show();
+                            user.setVisibility(View.VISIBLE);
+                        }
 
                     }
 
@@ -467,16 +508,24 @@ public class UserVPro extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         pro.setVisibility(View.VISIBLE);
     }
 
-    /*public void onRestart(){
-        super.onRestart();
-        pro();
+    public void onPause() {
+        super.onPause();
+        if (android.os.Build.VERSION.SDK_INT >= 27) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        }
     }
 
-    public void onStart(){
+    public void onRestart() {
+        super.onRestart();
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+    }
+
+    /*public void onStart(){
         super.onStart();
         pro();
     }*/

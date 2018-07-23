@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -39,7 +40,8 @@ public class Startup extends AppCompatActivity {
         setContentView(R.layout.activity_startup);
 
         initializePlayerBox();
-        /*Button login = findViewById(R.id.start);
+        Button login = findViewById(R.id.start);
+        login.setVisibility(View.VISIBLE);
         login.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -48,16 +50,15 @@ public class Startup extends AppCompatActivity {
                                         }
                                     }
 
-        );*/
-        new Handler().postDelayed(new Runnable(){
+        );
+     /*   new Handler().postDelayed(new Runnable(){
             @Override
             public void run() {
-                /* Create an Intent that will start the Menu-Activity. */
                 Intent mainIntent = new Intent(Startup.this,HomePage.class);
                 startActivity(mainIntent);
                 Startup.this.finish();
             }
-        }, 1500);
+        }, 3500); //have to set it long enough so the videos get loaded. first time app is used it has to be ~3500. after that, even 1500 works*/
     }
 
     private void initializePlayerBox(){
@@ -66,6 +67,19 @@ public class Startup extends AppCompatActivity {
         players[0]= new Player("Stephen Curry","android.resource://com.example.samch.followthrough/" + R.raw.stephform);
         players[1] = new Player("Damian Lillard", "android.resource://com.example.samch.followthrough/" + R.raw.dameform);
         players[2] = new Player("Lebron James", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
+        players[3] = new Player("Lebron Jame", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
+        players[4] = new Player("Lebron Jams", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
+        players[5] = new Player("Lebron Jaes", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
+        players[6] = new Player("Lebron Jmes", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
+        players[7] = new Player("Lebron ames", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
+        players[8] = new Player("Lebro James", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
+        players[9] = new Player("Lebrn James", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
+        players[10] = new Player("Leron James", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
+        players[11] = new Player("Lbron James", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
+        players[12] = new Player("ebron James", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
+        players[13] = new Player("aLebron James", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
+        Log.d("App", "loaded all players" );
+
         for (int i = 0; i < players.length; i++) {
             if (players[i] != null) {
                 QueryBuilder<Player> builder = playersBox.query();

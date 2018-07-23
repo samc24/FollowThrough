@@ -9,6 +9,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:textViewStyle">@font/open_sans</item>
         <item name="android:buttonStyle">@font/open_sans</item>
+        <item name="colorControlHighlight">@color/transparentR</item>
     </style>
 
     <style name="AppTheme.AB" parent="Theme.AppCompat" tools:targetApi="lollipop">
