@@ -75,7 +75,7 @@ public class HomePage extends AppCompatActivity {
                         // close drawer when item is tapped
                         mDrawerLayout.closeDrawers();
 
-                        Toast.makeText(getApplicationContext(),"Selected:" + menuItem.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Selected:" + menuItem.toString(), Toast.LENGTH_LONG).show();
 
                         // Add code here to update the UI based on the item selected
                         // For example, swap UI fragments here
@@ -88,10 +88,10 @@ public class HomePage extends AppCompatActivity {
                 });
 
 //        actionbar.setTitle("Choose a Pro"); // or android:label in xml
-        playersBox = ((App)getApplication()).getBoxStore().boxFor(Player.class);
+        playersBox = ((App) getApplication()).getBoxStore().boxFor(Player.class);
         //playersBox = (MyObjectBox.builder().androidContext(HomePage.this).build()).boxFor(Player.class);
         players = playersBox.query().build().find();
-        for (int i =0; i<players.size();i++){
+        for (int i = 0; i < players.size(); i++) {
             playerNames.add(players.get(i).getPlayerName());
         }
         // sort pros array (mergesort?)
@@ -100,10 +100,10 @@ public class HomePage extends AppCompatActivity {
         handleIntent(getIntent());
 
 //        ArrayAdapter adapter = (new ArrayAdapter<String>(this, R.layout.list_item,
-  //              getResources().getStringArray(R.array.pros)));
+        //              getResources().getStringArray(R.array.pros)));
         final ArrayAdapter adapter = (new ArrayAdapter<String>(this, R.layout.list_item,
-                 playerNames.toArray(new String[playerNames.size()])));
-        playerArrayAdapter = (new PlayerAdapter(this,R.layout.player_item, players.toArray(),playersBox));
+                playerNames.toArray(new String[playerNames.size()])));
+        playerArrayAdapter = (new PlayerAdapter(this, R.layout.player_item, players.toArray(new Player[players.size()]), playersBox));
         lv = findViewById(R.id.proList);
         lv.setAdapter(playerArrayAdapter);
 
@@ -114,14 +114,30 @@ public class HomePage extends AppCompatActivity {
                 Animation animation1 = new AlphaAnimation(0.3f, 1.0f);
                 animation1.setDuration(4000);
                 view.startAnimation(animation1);*/
-                //Toast.makeText(getApplicationContext(),((TextView)view).getText(), Toast.LENGTH_SHORT).show();
                 Intent compare = new Intent(HomePage.this, UserVPro.class);
-                //compare.putExtra("Pro", ((TextView)view).getText());
-                compare.putExtra("ProId", players.get(i).getId());
+                TextView textView = (TextView) view.findViewById(R.id.player_name);
+                String proName = textView.getText().toString();
+                long proId = playerArrayAdapter.players[i].getId();
+                String proVid = "android.resource://com.example.samch.followthrough/";
+                switch (proName) {
+                    case "Stephen Curry":
+                        proVid += R.raw.stephform;
+                        break;
+                    case "Damian Lillard":
+                        proVid += R.raw.dameform;
+                        break;
+                    case "Lebron James":
+                        proVid += R.raw.lebronform;
+                        break;
+                    default:
+                        proVid += R.raw.lebronform;
+                }
+                compare.putExtra("ProId", proId);
+                compare.putExtra("ProVid", proVid);
                 compare.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(compare);
             }
-        } );
+        });
 
 
     }
@@ -130,7 +146,6 @@ public class HomePage extends AppCompatActivity {
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            Log.d("App","handleIntent query: "+ query);
 
             //use the query to search your data somehow
         }
@@ -144,7 +159,7 @@ public class HomePage extends AppCompatActivity {
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         final SearchView searchView =
                 (SearchView) menu.findItem(R.id.search).getActionView();
-        if(null!=searchManager ) {
+        if (null != searchManager) {
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         }
         searchView.setIconifiedByDefault(false);
@@ -153,11 +168,10 @@ public class HomePage extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if(query!=null) {
+                if (query != null) {
                     //playerArrayAdapter.getFilter().filter(query);
-                    Log.d("App", "queryTextSubmit query: " + query);
                     List<Player> searched = playersBox.query().startsWith(Player_.playerName, query).build().find();
-                    searchAdapter = (new PlayerAdapter(getApplicationContext(), R.layout.player_item, searched.toArray(), playersBox));
+                    searchAdapter = (new PlayerAdapter(getApplicationContext(), R.layout.player_item, searched.toArray(new Player[searched.size()]), playersBox));
                     lv.setAdapter(searchAdapter);
                 }
                 return true;
@@ -165,10 +179,10 @@ public class HomePage extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if(newText!=null) {
+                if (newText != null) {
                     //playerArrayAdapter.getFilter().filter(newText);
                     List<Player> searched = playersBox.query().startsWith(Player_.playerName, newText).build().find();
-                    searchAdapter = (new PlayerAdapter(getApplicationContext(), R.layout.player_item, searched.toArray(), playersBox));
+                    searchAdapter = (new PlayerAdapter(getApplicationContext(), R.layout.player_item, searched.toArray(new Player[searched.size()]), playersBox));
                     lv.setAdapter(searchAdapter);
                 }
                 return true;
@@ -179,7 +193,6 @@ public class HomePage extends AppCompatActivity {
             @Override
             public boolean onClose() {
                 lv.setAdapter(playerArrayAdapter);
-                Log.d("App", "SEARCH CLOSED" );
 
                 return true;
             }
@@ -198,7 +211,6 @@ public class HomePage extends AppCompatActivity {
                 return true;
             }
         });
-
 
 
         return super.onCreateOptionsMenu(menu);

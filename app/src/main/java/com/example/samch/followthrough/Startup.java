@@ -63,22 +63,22 @@ public class Startup extends AppCompatActivity {
 
     private void initializePlayerBox(){
         playersBox = ((App)getApplication()).getBoxStore().boxFor(Player.class);
+//        playersBox.removeAll(); // uncomment this whenever changes are made to the players or videos, because if not then the old ones will stay in the box and will lead to errors (responsible for cant play video)
         Player[] players = new Player[100];
-        players[0]= new Player("Stephen Curry","android.resource://com.example.samch.followthrough/" + R.raw.stephform);
-        players[1] = new Player("Damian Lillard", "android.resource://com.example.samch.followthrough/" + R.raw.dameform);
-        players[2] = new Player("Lebron James", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
-        players[3] = new Player("Lebron Jame", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
-        players[4] = new Player("Lebron Jams", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
-        players[5] = new Player("Lebron Jaes", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
-        players[6] = new Player("Lebron Jmes", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
-        players[7] = new Player("Lebron ames", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
-        players[8] = new Player("Lebro James", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
-        players[9] = new Player("Lebrn James", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
-        players[10] = new Player("Leron James", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
-        players[11] = new Player("Lbron James", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
-        players[12] = new Player("ebron James", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
-        players[13] = new Player("aLebron James", "android.resource://com.example.samch.followthrough/" + R.raw.lebronform);
-        Log.d("App", "loaded all players" );
+        players[0]= new Player("Stephen Curry");
+        players[1] = new Player("Damian Lillard");
+        players[2] = new Player("Lebron James");
+        players[3] = new Player("Lebron Jame");
+        players[4] = new Player("Lebron Jams");
+        players[5] = new Player("Lebron Jaes");
+        players[6] = new Player("Lebron Jmes");
+        players[7] = new Player("Lebron ames");
+        players[8] = new Player("Lebro James");
+        players[9] = new Player("Lebrn James");
+        players[10] = new Player("Leron James");
+        players[11] = new Player("Lbron James");
+        players[12] = new Player("Ebron James");
+        players[13] = new Player("ALebron James");
 
         for (int i = 0; i < players.length; i++) {
             if (players[i] != null) {

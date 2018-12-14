@@ -49,7 +49,7 @@ import io.objectbox.Box;
 import static android.media.AudioManager.AUDIOFOCUS_NONE;
 
 public class UserVPro extends AppCompatActivity {
-    public static final int PICK_VIDEO_REQUEST = 1;
+    public static final int PICK_VIDEO_REQUEST = 1, UPLOAD_VIDEO_REQUEST = 0;
     public ImageButton choose;
     public VideoView mVideoView1, mVideoView2, preview;
     public ImageButton user, pro, userfs, profs, previewPlay, compare;
@@ -146,7 +146,7 @@ public class UserVPro extends AppCompatActivity {
                                 }
                             }
                         });
-                alertDialogBuilder.setNeutralButton("Upload Video",
+                alertDialogBuilder.setNeutralButton("Choose Video",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -157,6 +157,19 @@ public class UserVPro extends AppCompatActivity {
                                 dialogInterface.dismiss();
                             }
                         });
+
+                //upload trial
+                alertDialogBuilder.setNegativeButton("Upload Video", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        Intent intent1 = new Intent(Intent.ACTION_PICK);
+                        intent1.setType("video/*");
+                        intent1.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(Intent.createChooser(intent1, "Select Video"), UPLOAD_VIDEO_REQUEST);
+                        dialogInterface.dismiss();
+                    }
+                });
                 alertDialogBuilder.show();
             }
         });
@@ -172,9 +185,8 @@ public class UserVPro extends AppCompatActivity {
         playersBox = ((App) getApplication()).getBoxStore().boxFor(Player.class);
         player = playersBox.get(playerId);
         speed1 = (SeekBar) findViewById(R.id.speed1);
-        Log.d("App", "file uri:" + player.getLocalFileURI());
-        uri1 = Uri.parse(player.getLocalFileURI());
-        Log.d("App", "parsed uri:" + uri1);
+        uri1 = Uri.parse(getIntent().getExtras().getString("ProVid"));
+//        uri1 = Uri.parse(player.getLocalFileURI());
 
         speed1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -233,7 +245,6 @@ public class UserVPro extends AppCompatActivity {
 
                         mp.setVideoScalingMode(MediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING);
 
-                        Log.d("App", "videoOnPrepared");
                         mp.setVolume(0.0f, 0.0f);
 
                     }
@@ -243,7 +254,6 @@ public class UserVPro extends AppCompatActivity {
         });
         mVideoView1.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             public void onCompletion(final MediaPlayer mp) {
-                Log.d("App", "Video Complete");
                 mp.setVolume(0.0f, 0.0f);
                 pro.setVisibility(View.VISIBLE);
 
@@ -323,6 +333,12 @@ public class UserVPro extends AppCompatActivity {
                 builder.setCancelable(false);
                 builder.show();
             }
+        }
+        else if (requestCode == UPLOAD_VIDEO_REQUEST){
+            path = data.getData().toString();
+            Upload up = new Upload(path);
+            Log.d("App:", "about to execute upload: " + path);
+            up.execute();
         }
     }
 

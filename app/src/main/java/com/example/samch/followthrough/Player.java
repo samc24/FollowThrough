@@ -7,23 +7,24 @@ import io.objectbox.annotation.Id;
 public class Player { //representation of data.
     @Id
     long id;
+    //@Index for playerName?
     String playerName;
-    String localFileURI;
+    String localFileURI; // TODO: check entity annotations and see if any apply here
     boolean favorite;
 
-    public Player(long id, String playerName, String localFileURI){
+    public Player(long id, String playerName){
         this.id = id;
         this.playerName = playerName;
-        this.localFileURI = localFileURI;
+        //this.localFileURI = localFileURI;
     }
 
     public Player(){
         //empty
     }
 
-    public Player(String playerName, String localFileURI){
+    public Player(String playerName){
         this.playerName = playerName;
-        this.localFileURI = localFileURI;
+//        this.localFileURI = localFileURI;
     }
 
     public long getId() {

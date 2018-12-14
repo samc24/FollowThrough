@@ -31,20 +31,20 @@ import java.util.Locale;
 import io.objectbox.Box;
 
 public class PlayerAdapter extends ArrayAdapter {
-    public Object[] players;
+    public Player[] players;
     public Context mContext;
     private Box<Player> playersBox;
     public ImageButton favorite, unfavorite, expand;
 
-    public PlayerAdapter(@NonNull Context context, int resource, @NonNull Object[] objects, Box<Player> playersBox) {
+    public PlayerAdapter(@NonNull Context context, int resource, @NonNull Player[] objects, Box<Player> playersBox) {
         super(context, resource, objects);
-        //players = sortPlayers(objects);
+        players = sortPlayers(objects);
         players = objects;
         mContext = context;
         this.playersBox = playersBox;
     }
 
-    private Object[] sortPlayers(Object[] playerArray) {
+    private Player[] sortPlayers(Player[] playerArray) {
         List playerList = Arrays.asList(playerArray);
         Collections.sort(playerList, new Comparator<Object>() {
             public int compare(Object o1, Object o2) {
@@ -66,7 +66,7 @@ public class PlayerAdapter extends ArrayAdapter {
                 return player1.getPlayerName().compareTo(player2.getPlayerName());
             }
         });
-        return playerList.toArray();
+        return (Player[]) playerList.toArray();
     }
 
     @NonNull
@@ -144,7 +144,7 @@ public class PlayerAdapter extends ArrayAdapter {
     }
 
     @Override
-    public Filter getFilter(){ // TODO: doesnt work
+    public Filter getFilter(){ // not used, TODO: doesnt work
         final List<Object> playerList = new ArrayList<Object>(Arrays.asList(players));
         return new Filter(){
 
