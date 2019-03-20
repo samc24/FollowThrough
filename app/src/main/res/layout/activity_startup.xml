@@ -9,20 +9,6 @@
     android:background="#FFFFFF">
 
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.4"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@+id/start"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/kobeft" />
-
     <TextView
         android:id="@+id/follow_thro"
         android:layout_width="288dp"
@@ -41,50 +27,52 @@
 
     </TextView>
 
-        <View
-            android:id="@+id/logobig"
-            android:layout_width="288dp"
-            android:layout_height="288dp"
-            android:layout_marginTop="141dp"
-            android:background="@drawable/logobig"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+    <ImageView
+        android:id="@+id/logobig"
+        android:layout_width="288dp"
+        android:layout_height="288dp"
+        android:layout_marginTop="104dp"
+        android:background="@drawable/logobig"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/start"
-        android:layout_width="167dp"
-        android:layout_height="55dp"
-        android:layout_marginBottom="88dp"
-        android:background="#003da5"
+        android:visibility="gone"
+        android:layout_width="160dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="120dp"
+        android:background="@color/NBABlue"
         android:gravity="center"
         android:text="START"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/slogan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:text="Hold that follow through!"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Hold that Follow Through!"
         android:textColor="@color/NBABlue"
-        android:textSize="34sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/start"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logobig"
-        app:layout_constraintVertical_bias="0.177" />
+        app:layout_constraintVertical_bias="0.367" />
 
 </android.support.constraint.ConstraintLayout>

@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:6816975457595011675",
-      "lastPropertyId": "3:1659283317985668506",
+      "lastPropertyId": "5:7239758904678291170",
       "name": "Player",
       "properties": [
         {
@@ -19,6 +19,14 @@
         {
           "id": "3:1659283317985668506",
           "name": "localFileURI"
+        },
+        {
+          "id": "4:2865144132509574489",
+          "name": "favorite"
+        },
+        {
+          "id": "5:7239758904678291170",
+          "name": "playerProfile"
         }
       ],
       "relations": []

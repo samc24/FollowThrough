@@ -49,8 +49,8 @@ import io.objectbox.Box;
 import static android.media.AudioManager.AUDIOFOCUS_NONE;
 
 public class UserVPro extends AppCompatActivity {
-    public static final int PICK_VIDEO_REQUEST = 1, UPLOAD_VIDEO_REQUEST = 0;
-    public ImageButton choose;
+    public static final int PRO_VIDEO_REQUEST = 2, PICK_VIDEO_REQUEST = 1, UPLOAD_VIDEO_REQUEST = 0;
+    public ImageButton choose, proChoose;
     public VideoView mVideoView1, mVideoView2, preview;
     public ImageButton user, pro, userfs, profs, previewPlay, compare;
     public long playerId;
@@ -58,7 +58,7 @@ public class UserVPro extends AppCompatActivity {
     public Player player;
     public Uri uri1;
     public String path;
-    public TextView chooseTxt;
+    public TextView chooseTxt, proTxt;
     public SeekBar speed1, speed2;
     public int progress, duration;
     public Spinner spinner1, spinner2;
@@ -114,7 +114,7 @@ public class UserVPro extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
-        pro();
+        //pro();
 
         compare.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,8 +123,20 @@ public class UserVPro extends AppCompatActivity {
                 pro.performClick();
             }
         });
+        proTxt = findViewById(R.id.proTxt);
+        proChoose = findViewById(R.id.proBack);
+        proChoose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent(Intent.ACTION_PICK);
+//                intent.setType("video/*");
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+                Intent intent = new Intent(UserVPro.this, HomePage.class);
+                startActivityForResult(intent, PRO_VIDEO_REQUEST);
+            }
+        });
 
-        choose = findViewById(R.id.choose);
+        choose = findViewById(R.id.userBack);
         choose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -173,19 +185,25 @@ public class UserVPro extends AppCompatActivity {
                 alertDialogBuilder.show();
             }
         });
-
+        mVideoView1 = findViewById(R.id.videoView1);
+        mVideoView2 = findViewById(R.id.videoView2);
+        if(mVideoView1.getVisibility() == View.VISIBLE && mVideoView2.getVisibility() == View.VISIBLE)
+            compare.setVisibility(View.VISIBLE);
 
     }
 
-    public void pro() {
+    public void pro(Intent data) {
         pro = findViewById(R.id.pro);
+        pro.setVisibility(View.VISIBLE);
         profs = findViewById(R.id.profs);
-        mVideoView1 = findViewById(R.id.videoView1);
-        playerId = getIntent().getExtras().getLong("ProId");
+        profs.setVisibility(View.VISIBLE);
+        mVideoView1.setVisibility(View.VISIBLE);
+        playerId = data.getExtras().getLong("ProId"); // may have to change
         playersBox = ((App) getApplication()).getBoxStore().boxFor(Player.class);
         player = playersBox.get(playerId);
         speed1 = (SeekBar) findViewById(R.id.speed1);
-        uri1 = Uri.parse(getIntent().getExtras().getString("ProVid"));
+        speed1.setVisibility(View.VISIBLE);
+        uri1 = Uri.parse(data.getExtras().getString("ProVid"));
 //        uri1 = Uri.parse(player.getLocalFileURI());
 
         speed1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -281,6 +299,7 @@ public class UserVPro extends AppCompatActivity {
                 R.layout.change_speed, spinnerArray);
         adapter.setDropDownViewResource(R.layout.change_speed);
         spinner1 = findViewById(R.id.spinner1);
+        spinner1.setVisibility(View.VISIBLE);
         spinner1.setAdapter(adapter);
         spinner1.setSelection(3);
         
@@ -339,6 +358,12 @@ public class UserVPro extends AppCompatActivity {
             Upload up = new Upload(path);
             Log.d("App:", "about to execute upload: " + path);
             up.execute();
+        }
+
+        else if (requestCode == PRO_VIDEO_REQUEST){
+            proChoose.setVisibility(View.GONE);
+            proTxt.setVisibility(View.GONE);
+            pro(data);
         }
     }
 
@@ -400,7 +425,6 @@ public class UserVPro extends AppCompatActivity {
 
     public void user() {
 
-        mVideoView2 = findViewById(R.id.videoView2);
         mVideoView2.setVisibility(View.VISIBLE);/*
                 mediaPlayer = new MediaPlayer();
                 try {
@@ -512,7 +536,7 @@ public class UserVPro extends AppCompatActivity {
         });
 
         user.setVisibility(View.VISIBLE);
-        pro.setVisibility(View.VISIBLE); // DRY - dont repeat yourself. Make a sept method for this.
+//        pro.setVisibility(View.VISIBLE); // DRY - dont repeat yourself. Make a sept method for this.
     }
 
     public void onResume() {
@@ -526,7 +550,9 @@ public class UserVPro extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-        pro.setVisibility(View.VISIBLE);
+        if(mVideoView1.getVisibility() == View.VISIBLE && mVideoView2.getVisibility() == View.VISIBLE)
+            compare.setVisibility(View.VISIBLE);
+//        pro.setVisibility(View.VISIBLE);
     }
 
     public void onPause() {
@@ -539,6 +565,9 @@ public class UserVPro extends AppCompatActivity {
     public void onRestart() {
         super.onRestart();
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        if(mVideoView1.getVisibility() == View.VISIBLE && mVideoView2.getVisibility() == View.VISIBLE)
+            compare.setVisibility(View.VISIBLE);
     }
 
     /*public void onStart(){

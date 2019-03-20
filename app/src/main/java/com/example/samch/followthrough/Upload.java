@@ -5,6 +5,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -16,17 +17,17 @@ public class Upload extends AsyncTask<String, Void, String> {
         Log.d("App:", "Upload: path = "+ this.path);
     }
     @Override
-    protected String doInBackground(String... params) {
+    protected String doInBackground(String... params)  {
 //        String currentPath = System.getProperty("user.dir");
 //        Log.d("App","current Path: " + currentPath);
         String charset = "UTF-8";
         Log.d("App", "before file");
         String root = Environment.getExternalStorageDirectory().toString()+"/raw";
         Log.d("App", root);
-        String filePath = "android.resource://com.example.samch.scrollvideo";//Environment.getExternalStorageDirectory().toString() + "/raw";
+        String filePath = "/Users/samch/Desktop/FollowThrough/app/src/main/res/raw/lebronform.mp4";//android.resource://com.example.samch.scrollvideo";//Environment.getExternalStorageDirectory().toString() + "/raw";
         String fileName = "test.mp4";
         File uploadFile = new File(path);//"ScrollVideo/app/src/main/res/raw",fileName);//getApplicationContext().getFilesDir(), "android.resource://com.example.samch.scrollvideo/" + R.raw.test);//getResources().getIdentifier("FILENAME_WITHOUT_EXTENSION","raw", getPackageName()));//"android.resource://com.example.samch.scrollvideo/test.mp4");
-        Log.d("App", "file made "+uploadFile);
+        Log.d("App", "file made "+uploadFile + "file.isFile() = " + uploadFile.isFile());
         String requestURL = "https://salty-hamlet-24223.herokuapp.com/poses/vs";//"http://localhost:8000/poses/vs";
 
         try {

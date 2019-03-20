@@ -32,7 +32,8 @@
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_alignParentStart="true"
-            android:layoutAnimation="@anim/layout_item_slide_up">
+            android:layoutAnimation="@anim/layout_item_slide_up"
+            android:layout_alignParentLeft="true">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -40,7 +41,8 @@
                 android:clipChildren="false"
                 android:fillViewport="true"
                 android:scrollbars="vertical"
-                android:layout_alignParentStart="true">
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true">
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
@@ -52,7 +54,8 @@
                         android:id="@+id/videoView1"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:clipChildren="false"/>
+                        android:clipChildren="false"
+                        android:visibility="gone"/>
 
                 </HorizontalScrollView>
             </ScrollView>
@@ -73,7 +76,8 @@
                 android:tint="#ffffff"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="97dp"
-                tools:layout_editor_absoluteY="95dp" />
+                tools:layout_editor_absoluteY="95dp"
+                android:visibility="gone"/>
 
             <ImageButton
                 android:id="@+id/profs"
@@ -85,7 +89,9 @@
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/fullscreen"
                 android:tint="#ffffff"
-                app:srcCompat="@drawable/ic_fullscreen_white_18px" />
+                app:srcCompat="@drawable/ic_fullscreen_white_18px"
+                android:layout_alignParentRight="true"
+                android:visibility="gone" />
 
 
             <SeekBar
@@ -97,7 +103,8 @@
                 android:progress="100"
                 android:progressTint="@color/NBABlue"
                 android:thumbTint="@color/NBARed"
-                tools:targetApi="lollipop" />
+                tools:targetApi="lollipop"
+                android:visibility="gone" />
 
 
             <Spinner
@@ -107,7 +114,43 @@
                 android:layout_alignParentBottom="true"
                 android:layout_toEndOf="@+id/speed1"
                 android:layout_marginEnd="0dp"
-                android:background="@null"/>
+                android:background="@null"
+                android:layout_toRightOf="@+id/speed1"
+                android:layout_marginRight="0dp"
+                android:visibility="gone"/>
+
+
+            <ImageButton
+                android:id="@+id/proBack"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/follow_thro"
+                android:visibility="visible"
+                android:alpha="0.6"
+                app:srcCompat="@drawable/nbaround"/>
+
+            <TextView
+                android:id="@+id/proTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="BALLER"
+                android:textColor="@color/NBABlue"
+                android:textSize="75sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                tools:ignore="UnknownId" />
 
         </RelativeLayout>
 
@@ -126,20 +169,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         android:layoutAnimation="@anim/layout_item_slide_up">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.2"
-            android:scaleType="fitXY"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/logobig"
-            tools:ignore="ContentDescription"/>
 
 
         <ScrollView
@@ -163,6 +192,23 @@
 
             </HorizontalScrollView>
         </ScrollView>
+
+        <ImageButton
+            android:id="@+id/userBack"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/transparent"
+            android:alpha="0.6"
+            app:srcCompat="@drawable/logomatch"
+            tools:ignore="ContentDescription"/>
 
         <ImageButton
             android:id="@+id/user"
@@ -194,30 +240,20 @@
             android:contentDescription="@string/fullscreen"
             android:tint="#ffffff"
             android:visibility="gone"
-            app:srcCompat="@drawable/ic_fullscreen_white_18px" />
-
-        <ImageButton
-            android:id="@+id/choose"
-            android:layout_width="119dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="146dp"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/choose"
-            android:visibility="visible"
-            app:srcCompat="@drawable/choose" />
+            app:srcCompat="@drawable/ic_fullscreen_white_18px"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="11dp" />
 
         <TextView
             android:id="@+id/chooseTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/choose"
             android:paddingTop="10dp"
             android:layout_centerHorizontal="true"
-            android:text="@string/choose"
+            android:layout_centerVertical="true"
+            android:text="PLAYER"
             android:textColor="@color/NBABlue"
-            android:textSize="18sp"
+            android:textSize="75sp"
             android:textStyle="bold"
             android:visibility="visible"
             tools:ignore="UnknownId" />
@@ -243,7 +279,10 @@
             android:layout_marginEnd="0dp"
             android:layout_toEndOf="@+id/speed2"
             android:visibility="gone"
-            android:background="@null"/>
+            android:background="@null"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="0dp"
+            android:layout_toRightOf="@+id/speed2" />
 
 
     </RelativeLayout>

@@ -114,7 +114,8 @@ public class HomePage extends AppCompatActivity {
                 Animation animation1 = new AlphaAnimation(0.3f, 1.0f);
                 animation1.setDuration(4000);
                 view.startAnimation(animation1);*/
-                Intent compare = new Intent(HomePage.this, UserVPro.class);
+//                Intent compare = new Intent(HomePage.this, UserVPro.class);
+                Intent compare = new Intent();
                 TextView textView = (TextView) view.findViewById(R.id.player_name);
                 String proName = textView.getText().toString();
                 long proId = playerArrayAdapter.players[i].getId();
@@ -135,7 +136,9 @@ public class HomePage extends AppCompatActivity {
                 compare.putExtra("ProId", proId);
                 compare.putExtra("ProVid", proVid);
                 compare.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(compare);
+                setResult(2,compare);
+                finish();
+//                startActivity(compare);
             }
         });
 

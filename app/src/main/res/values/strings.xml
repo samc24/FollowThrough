@@ -29,4 +29,8 @@ Follow Through
         <item>o</item>
         <item>p</item>
     </string-array>
+
+    <string name="title_activity_pro_category">ProCategory</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

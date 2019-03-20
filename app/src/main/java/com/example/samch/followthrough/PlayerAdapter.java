@@ -18,7 +18,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -80,9 +82,11 @@ public class PlayerAdapter extends ArrayAdapter {
         TextView name = listItem.findViewById(R.id.player_name);
         name.setText(player.getPlayerName());
 
-        final TextView shotInfo = listItem.findViewById(R.id.shotInfo);
-        shotInfo.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu diam quis nulla consectetur gravida. Aliquam erat volutpat. Pellentesque sed nunc quis mi aliquam blandit. Mauris ut ornare erat, ut.");
+        ImageButton profile = listItem.findViewById(R.id.profile);
+        profile.setImageResource(player.getPlayerProfile());
 
+        final TextView shotInfo = listItem.findViewById(R.id.shotInfo);
+        shotInfo.setText(player.getInfo());
 
         final Animation fadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
         final Animation fadeOut = AnimationUtils.loadAnimation(getContext(), R.anim.fade_out);

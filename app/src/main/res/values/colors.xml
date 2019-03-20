@@ -8,4 +8,7 @@
     <color name="transparent">#80000000</color>
     <color name="transparentW">#80FFFFFF</color>
     <color name="transparentR">#80d50032</color>
+    <color name="transparentB">#80003da5</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

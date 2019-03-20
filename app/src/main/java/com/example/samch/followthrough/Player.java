@@ -1,5 +1,9 @@
 package com.example.samch.followthrough;
 
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 
@@ -9,12 +13,14 @@ public class Player { //representation of data.
     long id;
     //@Index for playerName?
     String playerName;
+    int playerProfile;
     String localFileURI; // TODO: check entity annotations and see if any apply here
     boolean favorite;
-
-    public Player(long id, String playerName){
+    String info;
+    public Player(long id, String playerName, int playerProfile){
         this.id = id;
         this.playerName = playerName;
+        this.playerProfile = playerProfile;
         //this.localFileURI = localFileURI;
     }
 
@@ -22,8 +28,10 @@ public class Player { //representation of data.
         //empty
     }
 
-    public Player(String playerName){
+    public Player(String playerName, int playerProfile, String info){
         this.playerName = playerName;
+        this.playerProfile = playerProfile;
+        this.info = info;
 //        this.localFileURI = localFileURI;
     }
 
@@ -42,6 +50,10 @@ public class Player { //representation of data.
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
+
+    public int getPlayerProfile() { return this.playerProfile; }
+
+    public String getInfo(){ return this.info; }
 
     public String getLocalFileURI(){
         return this.localFileURI;
