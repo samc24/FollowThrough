@@ -130,6 +130,9 @@ public class HomePage extends AppCompatActivity {
                     case "Lebron James":
                         proVid += R.raw.lebronform;
                         break;
+                    case "Klay Thompson":
+                        proVid += R.raw.klayform;
+                        break;
                     default:
                         proVid += R.raw.lebronform;
                 }

@@ -92,6 +92,7 @@ public class Startup extends AppCompatActivity {
         players[11] = new Player("Lbron James", R.drawable.lebronprof,"kobe>bron\nking\nlabron");
         players[12] = new Player("Ebron James", R.drawable.lebronprof,"kobe>bron\nking\nlabron");
         players[13] = new Player("ALebron James", R.drawable.lebronprof,"kobe>bron\nking\nlabron");
+        players[14] = new Player("Klay Thompson", R.drawable.klayprof,"Quick Release\nWide Base\nOne Motion\nMeme Lord");
 
         for (int i = 0; i < players.length; i++) {
             if (players[i] != null) {
